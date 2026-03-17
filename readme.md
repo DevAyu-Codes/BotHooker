@@ -20,6 +20,8 @@ micro BotHooker/script/multi_bot_logger.py
 ```
 add your bot api in `BOT_TOKENS` list and change `-10012345678` with your actual group id. You can also change `WORKERS_PER_BOT` according to your pc specs and preference. Save with `ctrl+x, y and enter`.
 
+Note that you need to add the bots to the grouo and make them admins, the group can be public or private.
+
 ### 3. Autostart on system boot:
 ```bash
 micro /etc/systemd/system/tg_logger.service
