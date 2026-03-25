@@ -9,14 +9,22 @@ Bot Hooker is script made by DevAyu-Codes that can snatch user inputs and bot ou
 
 ---
 ## Setup:
-### 1. Cloning the repo:
+### 1. Cloning the repo and installing dependencies:
 ```git
 git clone https://github.com/DevAyu-Codes/BotHooker.git
+```
+```
+sudo pacman -Syu cloudflared
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install flask requests urllib3
 ```
 
 ### 2. Editing the script:
 ```bash
-micro BotHooker/script/multi_bot_logger.py
+micro BotHooker/script/auto_proxy.py
 ```
 add your bot api in `BOT_TOKENS` list and change `-10012345678` with your actual group id. You can also change `WORKERS_PER_BOT` according to your pc specs and preference. Save with `ctrl+x, y and enter`.
 
@@ -29,19 +37,22 @@ micro /etc/systemd/system/tg_logger.service
 and paste the code, change all `username` with your actual username:
 ```bash
 [Unit]
-Description=Telegram Multi-Bot Logger (Fast RAM Lock)
-After=network.target
+Description=Telegram MITM Proxy Switchboard
+# Wait until the internet is fully connected before starting
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-Type=simple
-User=username
-WorkingDirectory=/home/username/scripts
-ExecStart=/usr/bin/python3 /home/username/scripts/multi_bot_logger.py
+User=USERNAME
+WorkingDirectory=/home/ayuk/scripts
+# The "-u" forces Python to print logs instantly to journalctl
+ExecStart=/usr/bin/python3 -u /home/USERNAME/scripts/auto_proxy.py
 Restart=always
-RestartSec=5
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
+
 ```
 
 ### 4. Starting the service:
